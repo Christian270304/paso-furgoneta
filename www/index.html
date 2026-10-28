@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+  <title>
+   Paso · Rutas en furgoneta
+  </title>
+  <meta content="#087e70" name="theme-color"/>
+  <script src="theme.js">
+  </script>
+  <link href="icons/paso-192.png" rel="icon" type="image/png"/>
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
+  <link href="app-base.css" rel="stylesheet"/>
+  <link href="ui.css" rel="stylesheet"/>
+   <link rel="stylesheet" href="remote-control.css">
+  <script src="remote-config.js"></script>
+ </head>
+ <body>
+  <!-- Cabecera de la aplicación -->
+  <header>
+   <div class="brand">
+    paso
+    <span>
+     ●
+    </span>
+   </div>
+   <small>
+    Malgrat de Mar · 08380
+   </small>
+  </header>
+  <!-- Planificación de entregas y recogidas -->
+  <main>
+   <aside>
+    <!-- Punto de partida -->
+    <section class="ui-card start-card">
+     <label for="start">
+      Punto de partida
+     </label>
+     <div class="row start-row">
+      <input aria-label="Dirección de inicio" id="start" placeholder="Calle y número de inicio"/>
+      <button id="findstart">
+       Buscar
+      </button>
+      <button aria-label="Usar mi posición actual" class="location-button" id="gps" title="Usar mi posición actual" type="button">
+       <svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24" width="22">
+        <circle cx="12" cy="12" r="7">
+        </circle>
+        <circle cx="12" cy="12" r="2.5">
+        </circle>
+        <path d="M12 1v4m0 14v4M1 12h4m14 0h4">
+        </path>
+       </svg>
+      </button>
+     </div>
+     <div aria-live="polite" class="sub" id="gpsstatus" style="margin-top:8px">
+      Busca una dirección o usa el icono de mi posición.
+     </div>
+    </section>
+    <button class="wide hidden" id="addextra" style="margin-bottom:14px" type="button">
+     Añadir fuera de ruta
+    </button>
+    <!-- Nueva parada -->
+    <form class="ui-card address-card" id="stopform">
+     <div class="row">
+      <div style="flex:1">
+       <label for="street">
+        Calle
+       </label>
+       <input autocomplete="address-line1" id="street" placeholder="Ej. Carrer de Mar" required=""/>
+      </div>
+      <div style="width:100px">
+       <label for="portal">
+        Portal
+       </label>
+       <input id="portal" placeholder="Ej. 12B"/>
+      </div>
+     </div>
+     <p class="sub" style="margin-top:8px">
+      Malgrat de Mar · 08380. Calle, avenida y paseo se buscan como carrer, avinguda y passeig.
+     </p>
+     <label for="door">
+      Puerta o paquete (opcional)
+     </label>
+     <input autocomplete="off" id="door" placeholder="Ej. 2.º A o paquete 1" style="margin-bottom:12px"/>
+     <div class="stop-options">
+      <label>
+       Tipo
+       <select id="stopkind">
+        <option value="delivery">
+         Entrega
+        </option>
+        <option value="pickup">
+         Recogida
+        </option>
+       </select>
+      </label>
+      <label class="priority-check">
+       <input id="stoppriority" type="checkbox"/>
+       Prioridad
+      </label>
+      <label>
+       Antes de
+       <input aria-label="Hora límite de la parada" id="stopdeadline" type="time"/>
+      </label>
+     </div>
+     <button class="primary wide" id="addsingle" type="submit">
+      + Añadir parada
+     </button>
+    </form>
+    <!-- Coordenadas y entrada múltiple -->
+    <section class="ui-card tools-card">
+     <details id="manualoptions">
+      <summary>
+       Añadir manualmente o con coordenadas
+      </summary>
+      <p class="sub">
+       Se usará la calle y el portal que tengas escritos arriba.
+      </p>
+      <button class="wide" id="manualstop">
+       Marcar el portal en el mapa
+      </button>
+      <label for="coordinates">
+       Coordenadas exactas (latitud, longitud)
+      </label>
+      <input id="coordinates" placeholder="Ej. 41.646123, 2.741456" spellcheck="false"/>
+      <p class="sub">
+       Pega las coordenadas de Google Maps, con punto o coma decimal. Ejemplo: 41,6421946, 2,7357050.
+      </p>
+      <button class="wide" id="coordstop">
+       Añadir por coordenadas
+      </button>
+     </details>
+     <details>
+      <summary>
+       Añadir varias direcciones de golpe
+      </summary>
+      <label for="addresses">
+       Una calle y portal por línea
+      </label>
+      <textarea id="addresses" placeholder="Carrer de Mar 12. Prioridad
+Sant Esteve 10. Prioridad 12:00
+Carrer del Carme 127. Recogida 12:30" rows="3"></textarea>
+      <p class="sub">
+       Una dirección con portal por línea. Añade «Prioridad» (antes de las 13:00), «Prioridad 12:00» o «Recogida 12:30». El PDF incluye las entregas y las recogidas.
+      </p>
+      <button class="wide" id="add" style="margin-top:8px">
+       + Buscar direcciones
+      </button>
+     </details>
+    </section>
+    <div id="choices">
+    </div>
+    <div class="hidden" id="pinconfirm">
+     <p class="sub">
+      Toca el mapa o arrastra el marcador hasta el portal y confirma.
+     </p>
+     <div class="row">
+      <button class="primary" id="savepin">
+       Confirmar portal
+      </button>
+      <button id="cancelpin">
+       Cancelar
+      </button>
+     </div>
+    </div>
+    <div aria-live="polite" id="notice" role="status">
+    </div>
+    <!-- Lista de paradas -->
+    <div class="ui-card stops-card">
+     <div class="row" style="justify-content:space-between">
+      <b>
+       Paradas
+       <span class="sub" id="count">
+        0
+       </span>
+      </b>
+      <button class="danger-button" id="clearstops" type="button">
+       Vaciar ruta
+      </button>
+     </div>
+     <div aria-label="Lista de paradas con desplazamiento" id="stops" role="region" tabindex="0">
+      <p class="sub">
+       Tus direcciones aparecerán aquí.
+      </p>
+     </div>
+    </div>
+    <!-- Destino y optimización -->
+    <section class="ui-card route-card">
+     <label for="ending">
+      ¿Dónde quieres terminar?
+     </label>
+     <select id="ending">
+      <option value="free">
+       En la última parada de la ruta
+      </option>
+      <option value="fixed">
+       En un punto que yo elija
+      </option>
+     </select>
+     <div class="hidden" id="endbox">
+      <div class="row" style="margin-top:10px">
+       <input aria-label="Dirección final" id="end" placeholder="Dirección del punto final"/>
+       <button id="findend">
+        Buscar
+       </button>
+      </div>
+      <div class="sub" id="endstatus">
+      </div>
+     </div>
+     <p class="sub">
+      Se busca un recorrido corto que respete las horas límite; una prioritaria puede ir más tarde si hay margen. Las horas límite ya vencidas se señalan y no fuerzan el orden. Las llegadas son estimaciones en furgoneta, sin contar el tiempo de entrega o recogida.
+     </p>
+     <button class="primary wide" id="calculate" style="margin-top:22px">
+      Optimizar ruta en furgoneta
+     </button>
+     <p class="sub" style="margin-top:12px">
+      Orden optimizado según distancias por carretera. Con muchas paradas, es una aproximación al recorrido más corto.
+     </p>
+     <button class="wide" id="exportdeliveries" type="button">
+      Descargar PDF del recorrido
+     </button>
+     <div id="itinerary">
+     </div>
+    </section>
+    <details class="ui-card settings-card">
+     <summary>
+      Datos en este dispositivo
+     </summary>
+     <p aria-live="polite" class="sub" id="localstatus">
+      Preparando guardado local…
+     </p>
+     <p class="sub">
+      Las paradas, sus estados y los portales que ajustes se guardan en este dispositivo. También se conservan hasta 12 recorridos como candidatos para mejorar futuras optimizaciones. No se sincronizan con otros dispositivos. Las paradas y sus estados se borran al vaciar la ruta. Si borras los datos de la aplicación o la desinstalas, se perderán los datos locales.
+     </p>
+     <button id="forgetportals" type="button">
+      Borrar portales aprendidos
+     </button>
+     <button id="clearlocal" style="margin-top:8px" type="button">
+      Borrar todos los datos locales
+     </button>
+    </details>
+    <details class="ui-card settings-card">
+     <summary>
+      Sobre el mapa y la ubicación
+     </summary>
+     <p class="sub">
+      El GPS se activa solo cuando lo solicitas. Las direcciones se envían al geocodificador del ICGC y las coordenadas a Valhalla para calcular la ruta. Perfil de conducción estándar, sin configurar altura ni peso de la furgoneta. Servicios públicos con límites de disponibilidad. Direcciones:
+      <a href="https://www.icgc.cat/es/Herramientas-y-visores/Herramientas/Geocodificador-ICGC" rel="noopener" target="_blank">
+       ICGC
+      </a>
+      . Mapa © OpenStreetMap.
+     </p>
+    </details>
+   </aside>
+   <!-- Mapa y seguimiento -->
+   <section class="mapwrap">
+    <div aria-label="Mapa de la ruta en furgoneta" id="map">
+    </div>
+    <button aria-expanded="false" aria-label="Mostrar mapa en pantalla completa" class="map-expand" id="mapexpand" title="Pantalla completa" type="button">
+     <svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24" width="22">
+      <path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5">
+      </path>
+     </svg>
+    </button>
+    <details class="map-stop-panel" id="mapstoppanel">
+     <summary id="mapstopsummary">
+      Paradas · 0
+     </summary>
+     <ol class="map-stop-list" id="mapstoplist">
+     </ol>
+    </details>
+    <div class="mapbadge" id="mapbadge">
+     Tu recorrido, de un vistazo
+    </div>
+    <div class="stats hidden" id="stats">
+     <div>
+      <strong id="distance">
+      </strong>
+      <small>
+       de recorrido
+      </small>
+     </div>
+     <div>
+      <strong id="duration">
+      </strong>
+      <small>
+       conducción aprox.
+      </small>
+     </div>
+     <button aria-label="Seguir mi posición por GPS" id="follow">
+      Seguir GPS
+     </button>
+    </div>
+   </section>
+  </main>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+  <script src="storage.js">
+  </script>
+  <script src="route-follow.js">
+  </script>
+  <script src="deliveries.js">
+  </script>
+  <script src="map-view.js">
+  </script>
+  <script src="stop-planning.js">
+  </script>
+  <script src="app.js">
+  </script>
+   <script src="remote-control.js"></script>
+ </body>
+</html>

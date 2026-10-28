@@ -1,0 +1,23 @@
+{
+  "name": "paso-furgoneta",
+  "version": "1.0.0",
+  "description": "Código fuente completo de la web publicada.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "android:sync": "cap sync android",
+    "android:open": "cap open android",
+    "backend:start": "npm --prefix backend start",
+    "backend:test": "npm --prefix backend test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.3"
+  }
+}

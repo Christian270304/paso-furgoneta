@@ -1,0 +1,842 @@
+:root {
+  --background: #f2f2f7;
+  --surface: #fff;
+  --text: #1c1c1e;
+  --muted: #686872;
+  --border: #dcdce2;
+  --hover: #ededf2;
+  --tint: #e8f2ff;
+  --accent: #007aff;
+  --primary: #007aff;
+  --onprimary: #fff;
+  --notice: #565662;
+  --danger: #c72630;
+  --danger-bg: #fff0f1
+}
+
+:root[data-theme="dark"] {
+  --background: #000;
+  --surface: #1c1c1e;
+  --text: #f5f5f7;
+  --muted: #a0a0aa;
+  --border: #38383a;
+  --hover: #2c2c2e;
+  --tint: #112a44;
+  --accent: #64adff;
+  --primary: #0a84ff;
+  --onprimary: #fff;
+  --notice: #b5b5bf;
+  --danger: #ff777d;
+  --danger-bg: #30171b
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  letter-spacing: -.2px
+}
+
+button,
+input,
+select,
+textarea {
+  border-radius: 12px;
+  min-height: 44px
+}
+
+button {
+  font-weight: 550;
+  transition: background .15s
+}
+
+input,
+select,
+textarea {
+  background: var(--background);
+  border-color: transparent;
+  padding: 12px 13px
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px
+}
+
+label {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 650;
+  color: var(--text)
+}
+
+header {
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  backdrop-filter: blur(20px);
+  padding-inline: 24px;
+  border-bottom: 1px solid var(--border)
+}
+
+.brand {
+  font-size: 27px;
+  letter-spacing: -1.4px
+}
+
+.brand span {
+  color: var(--accent)
+}
+
+main {
+  grid-template-columns: 440px 1fr
+}
+
+aside {
+  padding: 20px;
+  background: var(--background);
+  border-right: 1px solid var(--border)
+}
+
+.ui-card {
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  border-radius: 20px;
+  padding: 18px;
+  margin: 0 0 16px;
+  box-shadow: 0 2px 6px #00000004
+}
+
+.start-card .row {
+  gap: 7px
+}
+
+.start-card .row button {
+  padding: 10px 12px
+}
+
+.start-card .location-button {
+  width: 44px;
+  padding: 9px
+}
+
+.sub {
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--muted)
+}
+
+.address-card label {
+  margin: 0 0 8px
+}
+
+.address-card .primary {
+  margin-top: 4px
+}
+
+.primary {
+  background: var(--primary);
+  color: var(--onprimary);
+  border: 0;
+  font-weight: 650
+}
+
+.primary:hover {
+  background: color-mix(in srgb, var(--primary) 90%, black)
+}
+
+.wide {
+  min-height: 46px
+}
+
+.tools-card {
+  padding: 0 16px
+}
+
+.tools-card>details {
+  margin: 0;
+  padding: 14px 0
+}
+
+.tools-card>details+details {
+  border-top: 1px solid var(--border)
+}
+
+summary {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 550
+}
+
+details label {
+  margin-top: 12px
+}
+
+#notice {
+  font-size: 14px;
+  line-height: 1.45;
+  padding: 0 4px;
+  margin: 8px 0 18px;
+  color: var(--notice)
+}
+
+#notice:empty {
+  display: none
+}
+
+.stops-card {
+  padding: 18px 16px
+}
+
+.stops-card>.row {
+  align-items: center;
+  margin-bottom: 8px
+}
+
+.stops-card b {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.5px
+}
+
+.divider {
+  border-top: 0;
+  padding-top: 18px;
+  margin-top: 0
+}
+
+.stop {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px 12px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: unset
+}
+
+.stop:last-child {
+  border-bottom: 0;
+  padding-bottom: 0
+}
+
+.stop>.num {
+  margin-top: 2px;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: var(--tint);
+  color: var(--accent)
+}
+
+.stop div.stop-title {
+  min-width: 0;
+  width: 100%;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 550;
+  overflow-wrap: anywhere
+}
+
+.stop-title .sub {
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 400;
+  margin-top: 5px
+}
+
+.stop-actions {
+  grid-column: 1/-1;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%
+}
+
+.stop-actions button {
+  padding: 8px 12px;
+  font-size: 14px;
+  min-height: 40px;
+  border: 0;
+  background: var(--background);
+  border-radius: 10px;
+  flex: 1
+}
+
+.stop-actions .stop-delivery {
+  color: var(--accent);
+  background: var(--tint)
+}
+
+.stop-actions .stop-delete {
+  color: var(--danger);
+  background: transparent;
+  flex: 0 1 auto;
+  margin-left: auto
+}
+
+.stop-actions button:hover {
+  background: var(--hover)
+}
+
+.route-card label {
+  margin-top: 0
+}
+
+.route-card #calculate {
+  margin-top: 16px !important
+}
+
+.route-card p {
+  margin-bottom: 0
+}
+
+.route-reset {
+  margin: 4px 0 24px;
+  padding: 0 4px;
+  display: flex;
+  justify-content: flex-end
+}
+
+.danger-button {
+  color: var(--danger);
+  border: 1px solid color-mix(in srgb, var(--danger) 25%, transparent);
+  background: var(--danger-bg);
+  font-size: 14px;
+  padding: 9px 16px;
+  min-height: 44px
+}
+
+.danger-button:hover {
+  background: color-mix(in srgb, var(--danger-bg) 85%, var(--danger))
+}
+
+.settings-card {
+  padding: 16px 18px
+}
+
+.settings-card p {
+  margin-top: 12px
+}
+
+.settings-card button {
+  font-size: 14px
+}
+
+.mapbadge {
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(16px);
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  max-width: calc(100% - 92px)
+}
+
+.stats {
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter: blur(20px);
+  border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+  box-shadow: 0 5px 25px #0002;
+  border-radius: 16px
+}
+
+.stats button {
+  background: var(--tint);
+  border: 0;
+  color: var(--accent);
+  font-weight: 600
+}
+
+.marker {
+  background: #0a84ff
+}
+
+.map-expand {
+  border: 1px solid var(--border);
+  border-radius: 12px
+}
+
+.map-stop-panel {
+  border-radius: 16px
+}
+
+.delivery-dialog {
+  border-radius: 24px;
+  padding: 22px
+}
+
+.delivery-dialog h2 {
+  letter-spacing: -.6px
+}
+
+.delivery-dialog .row button {
+  background: var(--tint);
+  color: var(--accent);
+  border: 0
+}
+
+.delivery-dialog p {
+  line-height: 1.45
+}
+
+.leaflet-bar {
+  box-shadow: 0 2px 10px #0002 !important;
+  border-radius: 10px !important;
+  overflow: hidden
+}
+
+@media(max-width:760px) {
+  header {
+    height: 62px;
+    padding-inline: 20px
+  }
+
+  main {
+    height: auto
+  }
+
+  .mapwrap {
+    height: 44dvh;
+    min-height: 300px
+  }
+
+  aside {
+    padding: 18px 14px 24px
+  }
+
+  .ui-card {
+    padding: 17px 16px;
+    border-radius: 20px;
+    margin-bottom: 14px
+  }
+
+  .tools-card {
+    padding: 0 16px
+  }
+
+  .stops-card {
+    padding: 17px 16px
+  }
+
+  .stats {
+    padding: 6px 10px;
+    min-height: 56px
+  }
+
+  .stats strong {
+    font-size: 18px
+  }
+
+  .stats button {
+    font-size: 14px
+  }
+
+  .settings-card {
+    padding: 15px 16px
+  }
+
+  .stop-title .sub {
+    font-size: 14px
+  }
+
+  .route-reset {
+    margin-bottom: 22px
+  }
+
+  .start-card .row button {
+    padding: 9px 10px
+  }
+}
+
+@media(max-width:760px) {
+  header {
+    height: calc(62px + env(safe-area-inset-top))
+  }
+}
+
+
+
+.stops-card>.row {
+  gap: 12px;
+  flex-wrap: wrap
+}
+
+.stops-card>.row .danger-button {
+  margin-left: auto;
+  flex-shrink: 0;
+  padding: 8px 12px
+}
+
+.stops-card>.row b {
+  white-space: nowrap
+}
+
+
+
+#stops {
+  max-height: 36rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  scrollbar-gutter: stable;
+  padding-right: 4px
+}
+
+#stops:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 8px
+}
+
+
+
+.delivery-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  width: min(520px, calc(100% - 24px));
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  overflow: hidden;
+  gap: 0
+}
+
+.delivery-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0
+}
+
+.delivery-header h2 {
+  font-size: 20px;
+  margin: 0;
+  line-height: 1.3
+}
+
+.delivery-close {
+  width: 40px;
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--background);
+  font-size: 27px;
+  line-height: 1
+}
+
+.delivery-body {
+  padding: 14px 18px;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain
+}
+
+.delivery-body>p:first-child {
+  font-size: 14px;
+  margin: 0 0 12px
+}
+
+.delivery-dialog label {
+  margin: 0;
+  font-size: 14px
+}
+
+.delivery-dialog input {
+  margin: 6px 0 12px;
+  padding: 10px 12px
+}
+
+.delivery-body>.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px
+}
+
+.delivery-dialog .row button {
+  font-size: 14px;
+  padding: 10px
+}
+
+.delivery-body>.sub {
+  font-size: 13px;
+  margin: 8px 0;
+  line-height: 1.35
+}
+
+.delivery-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 12px 18px calc(12px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  flex-shrink: 0
+}
+
+.delivery-footer button {
+  font-size: 15px;
+  padding: 11px 8px;
+  min-height: 46px;
+  border: 0
+}
+
+.delivery-success {
+  background: #168347;
+  color: white
+}
+
+.delivery-incident {
+  background: var(--danger-bg);
+  color: var(--danger)
+}
+
+.delivery-footer button[aria-pressed="true"] {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px
+}
+
+.stop-actions .stop-delivery[data-status="delivered"] {
+  background: #168347;
+  color: #fff
+}
+
+.stop-actions .stop-delivery[data-status="incident"] {
+  background: var(--danger-bg);
+  color: var(--danger)
+}
+
+
+
+
+
+.package-marker {
+  position: relative
+}
+
+.package-count {
+  position: absolute;
+  top: -10px;
+  right: -19px;
+  background: var(--surface);
+  color: var(--accent);
+  border: 2px solid #0a84ff;
+  border-radius: 12px;
+  padding: 0 5px;
+  font-size: 12px;
+  line-height: 20px;
+  font-weight: 750;
+  min-width: 28px
+}
+
+.package-popup {
+  width: min(250px, 60vw);
+  color: var(--text)
+}
+
+.package-popup strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px
+}
+
+.package-popup button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  padding: 8px 10px;
+  margin-top: 6px;
+  background: var(--surface);
+  color: var(--text)
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--surface);
+  color: var(--text)
+}
+
+
+
+.delivery-share {
+  margin: 8px 0 0;
+  background: var(--tint);
+  color: var(--accent);
+  border: 0;
+  font-size: 14px
+}
+
+
+
+/* Compact directions in the expanded map; reserve the right control column. */
+
+.mapwrap.expanded .map-stop-panel {
+  width: min(440px, calc(100% - 86px))
+}
+
+.map-stop-panel summary {
+  padding: 8px 10px;
+  min-height: 40px
+}
+
+.map-stop-panel .map-stop-list {
+  max-height: min(216px, 24dvh);
+  padding: 0 8px 4px;
+  scrollbar-width: thin
+}
+
+.map-stop-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid var(--border)
+}
+
+.map-stop-list li:last-child {
+  border-bottom: 0
+}
+
+.map-stop-list button.map-stop-address {
+  min-width: 0;
+  border: 0;
+  padding: 8px 0;
+  gap: 6px;
+  line-height: 1.25;
+  font-size: 14px
+}
+
+.map-stop-list .num {
+  flex-shrink: 0
+}
+
+.map-stop-list .address {
+  min-width: 0;
+  text-align: left
+}
+
+.map-stop-list button.map-stop-delivery {
+  width: auto;
+  min-height: 44px;
+  padding: 8px;
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  border-radius: 9px;
+  background: var(--tint);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 650;
+  text-align: center;
+  justify-content: center
+}
+
+.map-stop-list button.map-stop-delivery:hover {
+  background: var(--hover)
+}
+
+
+
+.stop-options {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 10px;
+  align-items: end;
+  margin: 0 0 12px
+}
+
+.stop-options label {
+  min-width: 0
+}
+
+.stop-options select,
+.stop-options input[type=time] {
+  width: 100%;
+  font-size: 14px
+}
+
+.stop-options .priority-check {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 44px;
+  font-size: 13px
+}
+
+.priority-check input {
+  min-height: 20px;
+  width: 18px;
+  height: 18px;
+  margin: 0
+}
+
+.stop-plan {
+  color: var(--accent) !important
+}
+
+.stop-plan.late {
+  color: var(--danger) !important
+}
+
+.map-stop-meta {
+  display: block;
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--accent);
+  margin-top: 3px
+}
+
+.pickup-dialog {
+  width: min(420px, calc(100% - 24px));
+  padding: 20px;
+  border-radius: 20px
+}
+
+.pickup-dialog>.delivery-close {
+  float: right
+}
+
+.pickup-dialog p {
+  line-height: 1.4
+}
+
+.pickup-dialog .wide {
+  width: 100%
+}
+
+
+
+.pickup-marker {
+  background: #b76b00
+}
+
+.priority-marker {
+  background: #c64324
+}
+
+/* Área segura de la aplicación móvil. */
+header {
+  height: calc(76px + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
+}
+
+main {
+  height: calc(100dvh - 76px - env(safe-area-inset-top));
+}
+
+aside {
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 760px) {
+  header {
+    height: calc(62px + env(safe-area-inset-top));
+  }
+
+  main {
+    height: auto;
+  }
+}

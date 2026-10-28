@@ -1,0 +1,21 @@
+SEGUIMIENTO DEL RECORRIDO POR GPS
+
+1. Sustituye los archivos de www por los de este paquete.
+2. Desde la raíz de tu proyecto ejecuta: npx cap sync android
+3. Instala la actualización desde Android Studio.
+4. Optimiza la ruta y pulsa Seguir GPS. Acepta el permiso de ubicación.
+
+La línea y sus flechas desaparecen por detrás al avanzar con GPS fiable.
+Los marcadores de inicio, entregas, recogidas y final permanecen.
+No se marcan paquetes como completados automáticamente.
+El progreso se guarda junto con la ruta y se recupera al reabrir.
+Fuera del recorrido o con mala señal se conserva la línea, sin recalcular.
+Detener GPS pausa el seguimiento y conserva el avance.
+
+Archivos modificados: route-follow.js y app.js.
+El resto del contenido del ZIP original se conserva.
+
+Comprobado con posiciones GPS simuladas y validación de sintaxis JavaScript.
+Pendiente de prueba en un móvil real.
+El seguimiento usa la geolocalización existente mientras la app está activa;
+no incorpora un servicio nativo de GPS en segundo plano.

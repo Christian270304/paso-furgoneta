@@ -1,0 +1,705 @@
+:root {
+  --background: #f6f8fa;
+  --surface: #ffffff;
+  --text: #172c35;
+  --muted: #617680;
+  --border: #dbe2e7;
+  --hover: #eef3f6;
+  --tint: #e8f6f1;
+  --accent: #087e70;
+  --primary: #087e70;
+  --on-primary: #ffffff;
+  --primary-hover: #056658;
+  --notice: #805815
+}
+
+:root[data-theme="dark"] {
+  --background: #0b1217;
+  --surface: #111b22;
+  --text: #edf4f7;
+  --muted: #a7bac5;
+  --border: #30414d;
+  --hover: #1d2d38;
+  --tint: #143d36;
+  --accent: #72d9bc;
+  --primary: #72d9bc;
+  --on-primary: #072b22;
+  --primary-hover: #93e5cd;
+  --notice: #f3c37e
+}
+
+* {
+  box-sizing: border-box
+}
+
+body {
+  margin: 0;
+  font: 16px/1.5 system-ui, sans-serif;
+  color: var(--text);
+  background: var(--background)
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 11px 16px;
+  color: inherit
+}
+
+button:hover {
+  background: var(--hover)
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: wait
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--surface);
+  color: inherit
+}
+
+textarea {
+  resize: vertical
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 18px 0 8px
+}
+
+.brand {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -1px
+}
+
+.brand span {
+  color: #168575
+}
+
+header {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border)
+}
+
+header small {
+  font-size: 14px;
+  color: var(--muted)
+}
+
+main {
+  display: grid;
+  grid-template-columns: 410px 1fr;
+  height: calc(100dvh - 76px)
+}
+
+aside {
+  overflow: auto;
+  padding: 24px;
+  background: var(--surface);
+  border-right: 1px solid var(--border)
+}
+
+h1 {
+  font-size: 25px;
+  letter-spacing: -.8px;
+  margin: 0 0 4px
+}
+
+p {
+  margin: 6px 0 16px;
+  color: var(--muted)
+}
+
+.primary {
+  background: #087e70;
+  color: white;
+  border: 0
+}
+
+.primary:hover {
+  background: #056658
+}
+
+.wide {
+  width: 100%
+}
+
+.row {
+  display: flex;
+  gap: 8px
+}
+
+.row input {
+  min-width: 0
+}
+
+.start-row input {
+  flex: 1;
+  width: 0
+}
+
+.start-row button {
+  flex-shrink: 0
+}
+
+.location-button {
+  width: 46px;
+  min-height: 46px;
+  padding: 10px;
+  display: grid;
+  place-items: center;
+  color: var(--accent)
+}
+
+.sub {
+  font-size: 14px;
+  color: var(--muted)
+}
+
+.pill {
+  padding: 5px 12px;
+  border-radius: 30px;
+  background: var(--tint);
+  color: var(--accent);
+  font-size: 14px
+}
+
+.divider {
+  border-top: 1px solid var(--border);
+  margin-top: 24px;
+  padding-top: 20px
+}
+
+.stop {
+  display: flex;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: center
+}
+
+.num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--tint);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  font-size: 14px;
+  font-weight: 700
+}
+
+.stop div:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere
+}
+
+.stop button {
+  padding: 4px 10px
+}
+
+.mapwrap {
+  position: relative;
+  min-height: 400px
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+  background: var(--background)
+}
+
+.mapbadge {
+  position: absolute;
+  z-index: 500;
+  top: 20px;
+  left: 20px;
+  background: var(--surface);
+  padding: 13px 18px;
+  border-radius: 14px;
+  box-shadow: 0 4px 20px #193e3518;
+  font-size: 14px
+}
+
+.stats {
+  position: absolute;
+  z-index: 500;
+  bottom: 25px;
+  left: 24px;
+  right: 24px;
+  background: var(--surface);
+  border-radius: 18px;
+  padding: 18px 24px;
+  box-shadow: 0 8px 40px #193e3520;
+  display: flex;
+  gap: 35px;
+  align-items: center
+}
+
+.stats strong {
+  display: block;
+  font-size: 25px;
+  letter-spacing: -1px
+}
+
+.stats small {
+  color: var(--muted)
+}
+
+.stats button {
+  margin-left: auto
+}
+
+#notice {
+  margin: 12px 0;
+  font-size: 14px;
+  color: var(--notice);
+  white-space: pre-wrap
+}
+
+#choices button {
+  width: 100%;
+  text-align: left;
+  margin-top: 8px;
+  font-size: 14px
+}
+
+.marker {
+  background: #087e70;
+  border: 3px solid white;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 26px;
+  font-weight: bold;
+  box-shadow: 0 2px 5px #0003
+}
+
+.you {
+  background: #2579f3
+}
+
+.hidden {
+  display: none !important
+}
+
+#pinconfirm {
+  position: fixed;
+  z-index: 2000;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(440px, calc(100% - 32px));
+  background: var(--surface);
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 8px 40px #172c3540
+}
+
+#pinconfirm p {
+  margin: 0 0 10px
+}
+
+summary {
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--muted)
+}
+
+details {
+  margin-top: 18px
+}
+
+.steps {
+  padding-left: 20px;
+  font-size: 14px
+}
+
+.steps li {
+  padding: 8px 0
+}
+
+a {
+  color: var(--accent)
+}
+
+@media(max-width:760px) {
+  header {
+    padding: 0 20px;
+    height: 66px
+  }
+
+  header small {
+    display: none
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    height: auto
+  }
+
+  .mapwrap {
+    order: -1;
+    height: 42dvh;
+    min-height: 300px
+  }
+
+  aside {
+    padding: 22px;
+    border: 0;
+    overflow: visible
+  }
+
+  .stats {
+    bottom: 22px;
+    padding: 12px 16px;
+    gap: 18px
+  }
+
+  .stats strong {
+    font-size: 21px
+  }
+
+  .stats button {
+    font-size: 14px;
+    padding: 9px
+  }
+
+  .mapbadge {
+    top: 12px;
+    left: 12px
+  }
+}
+
+dialog {
+  max-width: 380px;
+  width: calc(100% - 32px);
+  border: 0;
+  border-radius: 18px;
+  padding: 24px;
+  color: var(--text)
+}
+
+dialog::backdrop {
+  background: #172c3566
+}
+
+dialog h2 {
+  margin: 0 0 12px;
+  font-size: 22px
+}
+
+header {
+  padding-top: env(safe-area-inset-top)
+}
+
+@media(min-width:761px) {
+  header {
+    height: calc(76px + env(safe-area-inset-top))
+  }
+
+  main {
+    height: calc(100dvh - 76px - env(safe-area-inset-top))
+  }
+
+  aside {
+    padding-bottom: calc(24px + env(safe-area-inset-bottom))
+  }
+}
+
+@media(max-width:760px) {
+  header {
+    height: calc(66px + env(safe-area-inset-top))
+  }
+
+  main {
+    height: auto
+  }
+}
+
+.primary {
+  background: var(--primary);
+  color: var(--on-primary)
+}
+
+.primary:hover {
+  background: var(--primary-hover)
+}
+
+.marker {
+  background: var(--primary);
+  color: var(--on-primary)
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px
+}
+
+.leaflet-control-zoom a,
+.leaflet-control-attribution,
+.leaflet-tooltip {
+  background: var(--surface) !important;
+  color: var(--text) !important
+}
+
+.leaflet-control-attribution a {
+  color: var(--accent)
+}
+
+.leaflet-tooltip {
+  border-color: var(--border)
+}
+
+.leaflet-tile-pane {
+  filter: none
+}
+
+:root[data-theme="dark"] .leaflet-bar {
+  border-color: var(--border)
+}
+
+@media(max-width:760px) {
+  .stats {
+    left: 12px;
+    right: 12px;
+    bottom: 22px;
+    padding: 6px 10px;
+    gap: 12px;
+    border-radius: 12px;
+    min-height: 56px
+  }
+
+  .stats>div {
+    flex-shrink: 0
+  }
+
+  .stats strong {
+    font-size: 18px;
+    line-height: 1.2;
+    letter-spacing: -.4px;
+    white-space: nowrap
+  }
+
+  .stats small {
+    display: none
+  }
+
+  .stats button {
+    min-height: 44px;
+    padding: 8px 10px;
+    font-size: 14px;
+    line-height: 1.2;
+    white-space: nowrap;
+    flex-shrink: 0;
+    border-radius: 9px
+  }
+}
+
+.stats>div {
+  text-align: center
+}
+
+.stats button {
+  margin-left: 0
+}
+
+.stats {
+  justify-content: center
+}
+
+.map-expand {
+  position: absolute;
+  z-index: 600;
+  top: 108px;
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  backdrop-filter: blur(6px);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0002
+}
+
+.map-stop-panel {
+  display: none;
+  position: absolute;
+  z-index: 600;
+  top: calc(12px + env(safe-area-inset-top));
+  left: 12px;
+  width: min(250px, calc(100% - 90px));
+  margin: 0;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0002;
+  overflow: hidden
+}
+
+.map-stop-panel summary {
+  padding: 10px 12px;
+  font-weight: 600;
+  color: var(--text);
+  min-height: 44px
+}
+
+.map-stop-list {
+  max-height: 30dvh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0 8px 8px;
+  list-style: none;
+  margin: 0
+}
+
+.map-stop-list button {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 8px 4px;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  font-size: 14px;
+  line-height: 1.35;
+  min-height: 44px
+}
+
+.map-stop-list .num {
+  width: 24px;
+  height: 24px
+}
+
+.map-stop-list .address {
+  overflow-wrap: anywhere
+}
+
+.map-stop-list p {
+  font-size: 14px;
+  margin: 4px
+}
+
+body.map-expanded {
+  overflow: hidden
+}
+
+.mapwrap.expanded {
+  position: fixed !important;
+  inset: 0;
+  z-index: 3000;
+  height: 100dvh !important;
+  min-height: 0;
+  width: 100%;
+  background: var(--background)
+}
+
+.mapwrap.expanded .map-stop-panel {
+  display: block
+}
+
+.mapwrap.expanded .mapbadge {
+  display: none
+}
+
+.mapwrap.expanded .map-expand {
+  top: calc(108px + env(safe-area-inset-top))
+}
+
+.mapwrap.expanded .leaflet-top {
+  top: env(safe-area-inset-top)
+}
+
+.mapwrap.expanded .stats {
+  bottom: calc(24px + env(safe-area-inset-bottom))
+}
+
+@media(max-width:760px) {
+  .stats {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    gap: 6px
+  }
+
+  .stats>div {
+    min-width: 0
+  }
+
+  .stats strong {
+    font-size: 18px
+  }
+
+  .stats button {
+    justify-self: end
+  }
+}
+
+.delivery-dialog {
+  max-width: 520px;
+  max-height: 88dvh;
+  overflow: auto;
+  background: var(--surface)
+}
+
+.delivery-dialog label {
+  margin-top: 12px
+}
+
+.delivery-dialog input {
+  margin: 8px 0 14px
+}
+
+.delivery-dialog .row {
+  flex-wrap: wrap
+}
+
+.stop {
+  flex-wrap: wrap
+}
+
+.stop div:nth-child(2) {
+  min-width: 120px
+}
+
+#exportdeliveries {
+  margin-top: 12px
+}

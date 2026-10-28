@@ -1,0 +1,5 @@
+*.md
+.md
+.env
+node_modules/
+android/

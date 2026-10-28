@@ -1,0 +1,11 @@
+const $=id=>document.getElementById(id);let state;
+async function request(url,method='GET',body){const response=await fetch(url,{method,headers:{'Content-Type':'application/json','X-Panel-Request':'1'},credentials:'same-origin',...(body?{body:JSON.stringify(body)}:{})});const data=await response.json();if(!response.ok){if(response.status===401){$('panel').hidden=true;$('login').hidden=false}throw Error(data.error||'Error de conexión.')}return data}
+function show(value){state=value;$('enabled').checked=value.enabled;$('blockedMessage').value=value.blockedMessage;$('status').textContent=value.enabled?'App habilitada':'App deshabilitada';$('current').textContent=value.announcement?'Aviso actual: '+value.announcement.text:'Sin aviso activo.';$('panel').hidden=false;$('login').hidden=true}
+async function action(fn){const buttons=[...document.querySelectorAll('button')];buttons.forEach(b=>b.disabled=true);$('feedback').textContent='';try{await fn()}catch(e){$('feedback').textContent=e.message}finally{buttons.forEach(b=>b.disabled=false)}}
+async function refresh(){show(await request('/api/admin/state'))}
+$('loginform').onsubmit=e=>{e.preventDefault();action(async()=>{await request('/api/admin/login','POST',{password:$('password').value});$('password').value='';await refresh()})};
+$('controlform').onsubmit=e=>{e.preventDefault();action(async()=>{show(await request('/api/admin/state','PATCH',{revision:state.revision,enabled:$('enabled').checked,blockedMessage:$('blockedMessage').value}));$('feedback').textContent='Disponibilidad guardada.'})};
+$('messageform').onsubmit=e=>{e.preventDefault();action(async()=>{show(await request('/api/admin/state','PATCH',{revision:state.revision,announcementText:$('announcement').value}));$('announcement').value='';$('feedback').textContent='Aviso enviado.'})};
+$('remove').onclick=()=>action(async()=>{show(await request('/api/admin/state','PATCH',{revision:state.revision,announcementText:''}));$('feedback').textContent='Aviso retirado.'});
+$('logout').onclick=()=>action(async()=>{await request('/api/admin/logout','POST',{});state=null;$('panel').hidden=true;$('login').hidden=false});$('refresh').onclick=()=>action(refresh);
+refresh().catch(()=>{});
